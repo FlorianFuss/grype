@@ -87,17 +87,17 @@ func TypeFromRelease(release linux.Release) Type {
 		return t
 	}
 
+	// try the release name as a fallback
+	t, ok = IDMapping[release.Name]
+	if ok {
+		return t
+	}
+
 	// use ID_LIKE as a backup
 	for _, l := range release.IDLike {
 		if t, ok := IDMapping[l]; ok {
 			return t
 		}
-	}
-
-	// first try the release name as a fallback
-	t, ok = IDMapping[release.Name]
-	if ok {
-		return t
 	}
 
 	return ""
